@@ -3,7 +3,7 @@ package pro.ivanov.services
 import com.dropbox.core.v2.files.FileMetadata
 import com.dropbox.core.v2.files.FolderMetadata
 import pro.ivanov.common.MarkdownParser
-import pro.ivanov.dropbox.DropboxClient
+import pro.ivanov.common.DropboxClient
 import pro.ivanov.models.Article
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -33,7 +33,7 @@ class ContentIndexer private constructor() {
             files;
         }
 
-        val indexFiles =filesInFolder.filter { it.name.equals("index.md") }
+        val indexFiles = filesInFolder.filter { it.name.equals("index.md") }
 
         val indexFilesContent = indexFiles.map {
             val fileInputStream = client.files().download(it.pathLower).inputStream
@@ -47,9 +47,9 @@ class ContentIndexer private constructor() {
         }
 
         this.articles = indexFilesContent.map {
-            val title: String = it.header.get("title").toString()
-            val slug: String = it.header.get("slug").toString()
-            val date: String = it.header.get("date").toString()
+            val title: String = it.header.get("title")?.first().toString()
+            val slug: String = it.header.get("slug")?.first().toString()
+            val date: String = it.header.get("date")?.first().toString()
             val tags: List<String> = it.header.get("tags")?.toMutableList() ?: listOf("unknown")
 
             val aricle = Article(
