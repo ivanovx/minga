@@ -1,0 +1,21 @@
+package pro.ivanov.dropbox
+
+import com.dropbox.core.v2.DbxClientV2
+import com.dropbox.core.DbxRequestConfig
+
+class DropboxClient {
+    private val accessToken: String = "sl.u.AFkCpFgWEr24khdBydvRa9mAVpsoB75mvSiwjwEBq5jAlgznc5sXNqHjpiGlzRRNENFPKX6q5W3Y58bZdvnbe_Y1RVUz4GTYZwmDzD5yCnoMIyCTQsLRr478ljlzsMlIrmqkrFW2yN_CJ5gNj95O6gGcSScQzvDJAHaWe2zrQ_NbOgVf9vc5oOWQIJJXs55QEym2Zr_hNvtKceVQXHV-X7_iGyPa_vXWyOlsb3i9DUacyus05U7U91DHDxM8UCZr_QklMHRqqzj1oxqkPX6YZSdevb5zBraosqZE5bYJHTkfS-2GLqo34dIupIRijfWhmJOZRy_-KiufT2Lrs5t68sTI1PuVTvEke0BkIXeaOhmdA2XmjwWswX5Wy_yjlUWHEpRfSiUwkpbTj8ZE9tl2KcdUnZbqjNIViRpftS-W2OTTAo0ry6voNgRA8vb92axWfuqQbU11OF4ZIB8Xhq1zfu65GwrZ79eou34jLR41nly_dPEFLHZ839ljYGlGLhCJVHC2scdKprrPdHESe4lC0ykawuS9Kr3LxgxGqLRePew2p-II8fo0EYceer6gPv_wIfSyy3kGe7DzQ_d8yim0SxGe6NSvb2swVKa8htp7q78NvA6g_vM0L_gHf-fGl9IzjMwjMPYlYpjEC9FmIv__mZr-pWIviXypYT1xPk27btshyXmHlJ-E78hhndt9yCCsZ1t6uFntF8nBE197jtZ82DgmZAHk2d9gTFOgD9ZVdaPYyn5IZVdtV2AJQMTUSEggli9DIR2PEp70UyI6rqYz-ufIMt-6KpiDNQSvFyo1qUNFFBvc2qknqJMDp_XARTiVkEL9fXxzdHkh9V028majcTEJ_tN9zxBpLp0YEar9Uf7DaTPzArLm2Xzn6Lp9tdVYuVh8fpTP5v2291jSY60tXg7w9HDq6zP-BA7qnvYbWnNHoSpwvQQZPaLBCE-fXDH4EgPxX8PLUc-CjvZStRSsfhVQCPn6lhoB2gnwDRbeGzhA5nZiDylWJ25FCPHas1GiowbaGYYR7nYqqgCyseiIMCKqrZyAENJnesE8CxhOgYD_WVkLmlRkekojxRUsygDSKZVShneo0YUOwrYWZJ0a4O3mZ0Q3BTDOwd0TGPHrRXcY8NuXPb4qA0haMeUVUVkZK6LSqKQGRJIg1zUbHR1ZJbjNwaEFMg5YuIfdikHQhcT-097gzaNWqUDiQINiewx2o3J2J0CXON8kYPEaZ-fcUPYrRFXVjGPRdwRtj1NL2v-RooDWd5oj_SUXJcbCbdgeXjSAe3qC7EPi63slUVDaXdW56hm9YE9Fs8mxQsz0Rezf6ZcWVCXuYrrdLMDyzezDoHd1IukfvC3d7Bfg-p4oY5aQMm0Ky5B1a8jz4s6g92JaMWMJ0dOeWaI5ezmhy41OA2Y"
+
+    private var client: DbxClientV2;
+
+    constructor() {
+        val config = DbxRequestConfig.newBuilder("downr").build()
+        val client = DbxClientV2(config,  accessToken);
+
+        this.client = client;
+    }
+
+    fun getClient(): DbxClientV2 {
+        return this.client
+    }
+}
