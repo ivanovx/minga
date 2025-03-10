@@ -23,7 +23,7 @@ class LayoutTemplate: Template<HTML> {
             nav(classes = "navbar sticky-top navbar-expand-lg bg-primary-subtle") {
                 div(classes = "container-fluid") {
                     a(classes = "navbar-brand", href = "/") {
-                        + "Downr"
+                        + "Minga"
                     }
                     button(classes = "navbar-toggler", type = ButtonType.button) {
                         attributes.put("data-bs-toggle", "collapse")

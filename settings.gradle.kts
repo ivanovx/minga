@@ -1,1 +1,1 @@
-rootProject.name = "downr"
+rootProject.name = "minga"
