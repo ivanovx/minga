@@ -15,15 +15,12 @@ class ArticleService {
     }
 
     fun getTags(): Set<String> {
-        var tags = mutableSetOf<String>();
-
-        val articleTags = articles.map { it.tags }.flatten()
-
-        articleTags.forEach { tags.add(it) }
+        val tags = articles.flatMap { it.tags }.flatMap {it.split(",")}.map { it.trim() }.toSet()
 
         return tags
+    }
 
-    //val allTags = articles.map{ it.tags }
-
+    fun getArticlesByTag(tag: String): List<Article> {
+       return articles.filter { it.tags.contains(tag) }
     }
 }

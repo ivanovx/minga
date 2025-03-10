@@ -17,8 +17,10 @@ class ArticleTemplate: Template<FlowContent> {
                 h5("card-subtitle") {
                     insert(articleDate)
                 }
-                unsafe {
-                    insert(articleContent)
+                div(classes = "mt-3") {
+                    unsafe {
+                        insert(articleContent)
+                    }
                 }
             }
         }

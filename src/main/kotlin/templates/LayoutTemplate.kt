@@ -48,7 +48,7 @@ class LayoutTemplate: Template<HTML> {
                                 ul(classes = "dropdown-menu") {
                                     tags.forEach {
                                         li {
-                                            a(classes = "dropdown-item", href="") {
+                                            a(classes = "dropdown-item", href="/articles?tag=${it}") {
                                                 + it
                                             }
                                         }
