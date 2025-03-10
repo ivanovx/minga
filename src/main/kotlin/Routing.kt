@@ -1,20 +1,22 @@
 package pro.ivanov
 
+import java.io.File
+import java.time.format.DateTimeFormatter
+
+import io.ktor.server.html.*
 import io.ktor.server.routing.*
 import io.ktor.server.application.*
-import io.ktor.server.html.*
-import io.ktor.http.*
-import io.ktor.util.*
+import io.ktor.server.http.content.*
+
 import kotlinx.html.*
 
 import pro.ivanov.services.ArticleService
 import pro.ivanov.templates.ArticleTemplate
 import pro.ivanov.templates.LayoutTemplate
 
-import java.time.format.DateTimeFormatter
-
 fun Application.configureRouting() {
     routing {
+        staticFiles("/posts", File("C:\\Users\\csynt\\Desktop\\downr"))
         get("/") {
             val articles = ArticleService().getArticles()
 
@@ -49,10 +51,13 @@ fun Application.configureRouting() {
             call.respondHtmlTemplate(LayoutTemplate()) {
                 content {
                     insert(ArticleTemplate()) {
-                        header {
+                        articleTitle {
                             +article.title
                         }
-                        content {
+                        articleDate {
+                            +article.date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+                        }
+                        articleContent {
                             +article.content
                         }
                     }

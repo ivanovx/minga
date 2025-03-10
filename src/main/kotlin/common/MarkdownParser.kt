@@ -1,16 +1,19 @@
 package pro.ivanov.common
 
 import org.commonmark.Extension
+import org.commonmark.ext.front.matter.YamlFrontMatterExtension
+import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
+import org.commonmark.ext.gfm.tables.TablesExtension
 import org.commonmark.node.Node
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
-import org.commonmark.ext.gfm.tables.TablesExtension
-import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
-import org.commonmark.ext.front.matter.YamlFrontMatterExtension
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+
 
 class MarkdownParser private constructor() {
     data class MarkdownParserResult(
-        val header: Map<String, List<String>>,
+        val header: Map<String, List<String>>, // metadata
         val content: String,
     )
 
@@ -29,10 +32,21 @@ class MarkdownParser private constructor() {
             document.accept(visitor)
 
             val renderer = HtmlRenderer.builder().build()
+            val html = renderer.render(document)
+            val doc: Document = Jsoup.parse(html)
 
-            println(visitor.data)
+            val slug = visitor.data.get("slug")?.first()?.toString()
 
-            val result = MarkdownParserResult(visitor.data, renderer.render(document))
+            doc.select("img").forEach {
+                val src = it.attr("src").replace("media/", "/posts/${slug}/media/")
+
+                it.attr("src", src)
+                it.addClass("img-fluid")
+            }
+
+            //doc.select("img").attr("src").replace("")
+
+            val result = MarkdownParserResult(visitor.data, doc.body().outerHtml())
 
             return result;
         }
