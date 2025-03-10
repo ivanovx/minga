@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "pro.ivanov"
-version = "0.0.1"
+version = "1.0.0"
 
 application {
     mainClass = "pro.ivanov.ApplicationKt"
@@ -20,14 +20,12 @@ repositories {
 dependencies {
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-cio")
-    implementation("ch.qos.logback:logback-classic")
     implementation("io.ktor:ktor-server-html-builder")
-    implementation("io.ktor:ktor-server-core")
-    implementation("io.ktor:ktor-server-config-yaml")
-    implementation("com.dropbox.core:dropbox-core-sdk")
-    implementation("org.commonmark:commonmark")
-    implementation("org.commonmark:commonmark-ext-gfm-tables")
-    implementation("org.commonmark:commonmark-ext-yaml-front-matter")
+    implementation("ch.qos.logback:logback-classic:1.5.17")
+    implementation("com.dropbox.core:dropbox-core-sdk:7.0.0")
+    implementation("org.commonmark:commonmark:0.24.0")
+    implementation("org.commonmark:commonmark-ext-gfm-tables:0.24.0")
+    implementation("org.commonmark:commonmark-ext-yaml-front-matter:0.24.0")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
