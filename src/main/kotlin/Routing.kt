@@ -19,27 +19,19 @@ fun Application.configureRouting() {
     routing {
         staticFiles("/content", File(Constants.contentRoot))
         get("/") {
-            val articles = ArticleService().getArticles()
+            val article = ArticleService().getLastArticle()
 
             call.respondHtmlTemplate(LayoutTemplate()) {
                 content {
-                    div(classes = "row") {
-                        articles.forEach {
-                            div(classes = "col-4 mt-2 mb-2") {
-                                div(classes = "card text-center") {
-                                    div(classes = "card-header") {
-                                        a("/${it.slug}", classes = "card-text") {
-                                            +it.title
-                                        }
-                                    }
-                                    div(classes = "card-body") {
-                                        + "..."
-                                    }
-                                    div(classes = "card-footer") {
-                                        +it.date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-                                    }
-                                }
-                            }
+                    insert(ArticleTemplate()) {
+                        articleTitle {
+                            +article.title
+                        }
+                        articleDate {
+                            +article.date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+                        }
+                        articleContent {
+                            +article.content
                         }
                     }
                 }
@@ -101,7 +93,7 @@ fun Application.configureRouting() {
                 }
             }
         }
-        get("/{slug}") {
+        get("/articles/{slug}") {
             val slug = call.parameters["slug"]!!
             val article = ArticleService().getArticle(slug)
 

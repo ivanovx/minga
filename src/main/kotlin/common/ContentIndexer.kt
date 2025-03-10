@@ -22,35 +22,29 @@ class ContentIndexer private constructor() {
     fun indexContent() {
         println("Begin index articles");
 
-        val rawArticles = Path(rootDir)
+        val articles = Path(rootDir)
             .listDirectoryEntries()
             .filter { it.isDirectory() }
             .map {
                 val indexFile = Path(it.pathString, "index.md")
                 val bufferedReader = File(indexFile.pathString).bufferedReader()
                 val rawContent = bufferedReader.use { it.readText() }
-                val content = MarkdownParser.parse(rawContent);
+                val markdown = MarkdownParser(rawContent).parse()
 
-                content
+                val article = Article(
+                    title = markdown.metadata.title,
+                    slug = markdown.metadata.slug,
+                    date = LocalDate.parse(markdown.metadata.date, DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                    tags = markdown.metadata.tags,
+                    content = markdown.content
+                )
+
+                article
             }
 
-        this.articles = rawArticles.map {
-            val title: String = it.header.get("title")?.first().toString()
-            val slug: String = it.header.get("slug")?.first().toString()
-            val date: String = it.header.get("date")?.first().toString()
-            val tags: List<String> = it.header.get("tags")?.toMutableList() ?: listOf("unknown")
+        this.articles = articles
 
-            val aricle = Article(
-                title,
-                slug,
-                LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-                tags,
-                it.content
-            )
 
-            aricle
-        }
-
-        println("Success index ${this.articles.size} articles");
+        println("Success index ${this.articles.size} articles")
     }
 }

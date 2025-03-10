@@ -10,6 +10,10 @@ class ArticleService {
         return articles.sortedBy { it.date }.reversed()
     }
 
+    fun getLastArticle(): Article {
+        return articles.sortedBy { it.date }.reversed().first()
+    }
+
     fun getArticle(slug: String): Article {
         return articles.find { it.slug == slug }!!
     }
