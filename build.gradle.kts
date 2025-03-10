@@ -22,7 +22,6 @@ dependencies {
     implementation("io.ktor:ktor-server-cio")
     implementation("io.ktor:ktor-server-html-builder")
     implementation("ch.qos.logback:logback-classic:1.5.17")
-    implementation("com.dropbox.core:dropbox-core-sdk:7.0.0")
     implementation("org.commonmark:commonmark:0.24.0")
     implementation("org.commonmark:commonmark-ext-gfm-tables:0.24.0")
     implementation("org.commonmark:commonmark-ext-yaml-front-matter:0.24.0")

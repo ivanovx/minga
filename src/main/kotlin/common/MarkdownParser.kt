@@ -1,12 +1,12 @@
 package pro.ivanov.common
 
 import org.commonmark.Extension
-import org.commonmark.ext.front.matter.YamlFrontMatterExtension
-import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
-import org.commonmark.ext.gfm.tables.TablesExtension
 import org.commonmark.node.Node
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import org.commonmark.ext.gfm.tables.TablesExtension
+import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
+import org.commonmark.ext.front.matter.YamlFrontMatterExtension
 
 class MarkdownParser private constructor() {
     data class MarkdownParserResult(

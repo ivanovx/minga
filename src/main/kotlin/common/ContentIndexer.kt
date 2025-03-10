@@ -1,17 +1,17 @@
-package pro.ivanov.services
+package pro.ivanov.common
 
-import com.dropbox.core.v2.files.FileMetadata
-import com.dropbox.core.v2.files.FolderMetadata
-import pro.ivanov.common.MarkdownParser
-import pro.ivanov.common.DropboxClient
 import pro.ivanov.models.Article
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
-import java.util.stream.Collectors
+
+import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlin.io.path.Path
+import kotlin.io.path.isDirectory
+import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.pathString
 
 class ContentIndexer private constructor() {
-    private var dropboxClient: DropboxClient = DropboxClient()
+    private val rootDir: String = System.getenv("DOWNR_ROOT").orEmpty()
 
     lateinit var articles: List<Article> private set;
 
@@ -21,6 +21,39 @@ class ContentIndexer private constructor() {
 
     fun indexContent() {
         println("Begin index articles");
+
+        val rawArticles = Path(rootDir)
+            .listDirectoryEntries()
+            .filter { it.isDirectory() }
+            .map {
+                val indexFile = Path(it.pathString, "index.md")
+                val bufferedReader = File(indexFile.pathString).bufferedReader()
+                val rawContent = bufferedReader.use { it.readText() }
+                val content = MarkdownParser.parse(rawContent);
+
+                content
+            }
+
+        this.articles = rawArticles.map {
+            val title: String = it.header.get("title")?.first().toString()
+            val slug: String = it.header.get("slug")?.first().toString()
+            val date: String = it.header.get("date")?.first().toString()
+            val tags: List<String> = it.header.get("tags")?.toMutableList() ?: listOf("unknown")
+
+            val aricle = Article(
+                title,
+                slug,
+                LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                tags,
+                it.content
+            )
+
+            aricle
+        }
+
+        println("Success index ${this.articles.size} articles");
+
+       /* println("Begin index articles");
 
         val client = dropboxClient.getClient()
         val folderContent = client.files().listFolder("/downr").entries.toList()
@@ -63,6 +96,6 @@ class ContentIndexer private constructor() {
             aricle
         }
 
-        println("Success index ${this.articles.size} articles");
+        println("Success index ${this.articles.size} articles");*/
     }
 }
