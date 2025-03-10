@@ -10,13 +10,14 @@ import io.ktor.server.http.content.*
 
 import kotlinx.html.*
 
+import pro.ivanov.common.Constants
 import pro.ivanov.services.ArticleService
 import pro.ivanov.templates.ArticleTemplate
 import pro.ivanov.templates.LayoutTemplate
 
 fun Application.configureRouting() {
     routing {
-        staticFiles("/posts", File("C:\\Users\\csynt\\Desktop\\downr"))
+        staticFiles("/content", File(Constants.contentRoot))
         get("/") {
             val articles = ArticleService().getArticles()
 

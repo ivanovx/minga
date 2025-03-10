@@ -38,13 +38,11 @@ class MarkdownParser private constructor() {
             val slug = visitor.data.get("slug")?.first()?.toString()
 
             doc.select("img").forEach {
-                val src = it.attr("src").replace("media/", "/posts/${slug}/media/")
+                val src = it.attr("src").replace("media/", "/content/${slug}/media/")
 
                 it.attr("src", src)
                 it.addClass("img-fluid")
             }
-
-            //doc.select("img").attr("src").replace("")
 
             val result = MarkdownParserResult(visitor.data, doc.body().outerHtml())
 

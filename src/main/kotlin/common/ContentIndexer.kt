@@ -11,7 +11,7 @@ import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.pathString
 
 class ContentIndexer private constructor() {
-    private val rootDir: String = System.getenv("DOWNR_ROOT").orEmpty()
+    private val rootDir: String = Constants.contentRoot
 
     lateinit var articles: List<Article> private set;
 
