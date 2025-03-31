@@ -17,7 +17,7 @@ import pro.ivanov.templates.LayoutTemplate
 
 fun Application.configureRouting() {
     routing {
-        staticFiles("/content", File(Constants.contentRoot))
+        staticFiles("/content", File(Constants.contentRoot.toUri()))
         get("/") {
             val article = ArticleService().getLastArticle()
 
@@ -50,7 +50,7 @@ fun Application.configureRouting() {
                                 div(classes = "col-4 mt-2 mb-2") {
                                     div(classes = "card text-center") {
                                         div(classes = "card-header") {
-                                            a("/${it.slug}", classes = "card-text") {
+                                            a("/articles/${it.slug}", classes = "card-text") {
                                                 +it.title
                                             }
                                         }
@@ -67,6 +67,7 @@ fun Application.configureRouting() {
                     }
                 }
             }
+
             val articles = ArticleService().getArticles()
 
             call.respondHtmlTemplate(LayoutTemplate()) {

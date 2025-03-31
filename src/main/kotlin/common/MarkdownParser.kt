@@ -39,7 +39,7 @@ class MarkdownParser(
         val slug = visitor.data.get("slug")?.first()?.toString()
 
         doc.select("img").forEach {
-            val src = it.attr("src").replace("media/", "/content/${slug}/media/")
+            val src = it.attr("src").replace("media/", "/content/articles/${slug}/media/")
 
             it.attr("src", src)
             it.addClass("img-fluid")
